@@ -1,0 +1,20 @@
+# Logs
+logs/*.log
+logs/error.log
+
+# Config com credenciais (opcional - descomente se não quiser versionar)
+# config/config.php
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+*.tmp
+*.bak
