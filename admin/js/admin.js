@@ -20,7 +20,8 @@ document.querySelectorAll('.nav-item').forEach(item => {
             settings: 'Configurações',
             credentials: 'Credenciais',
             registrations: 'Cadastros',
-            messages: 'Mensagens'
+            messages: 'Mensagens',
+            personalization: 'Personalização'
         };
         document.getElementById('pageTitle').textContent = titles[section] || 'Dashboard';
         
@@ -107,7 +108,7 @@ if (settingsForm) {
             const result = await response.json();
             
             if (result.success) {
-                showToast('Configurações salvas! Reinicie o servidor para aplicar.', 'success');
+                showToast('Configurações salvas com sucesso!', 'success');
             } else {
                 showToast(result.message || 'Erro ao salvar', 'error');
             }

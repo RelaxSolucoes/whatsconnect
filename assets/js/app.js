@@ -364,7 +364,7 @@ function redirectToChatwoot() {
     if (chatwootUrl) {
         window.open(chatwootUrl, '_blank');
     }
-    closeModal('success');
+    // Não fecha o modal para o usuário poder ver os dados
 }
 
 // ========================================

@@ -32,6 +32,39 @@ if (!$configContent) {
     exit;
 }
 
+// Se está tentando ativar o banco de dados, valida primeiro
+if (isset($input['use_database']) && $input['use_database']) {
+    try {
+        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+        $pdo = new PDO($dsn, DB_USER, DB_PASS, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ]);
+        
+        // Verifica se a tabela registrations existe
+        $stmt = $pdo->query("SHOW TABLES LIKE 'registrations'");
+        if ($stmt->rowCount() === 0) {
+            echo json_encode([
+                'success' => false, 
+                'message' => 'Tabela "registrations" não encontrada. Importe o arquivo database/schema.sql no seu banco de dados.'
+            ]);
+            exit;
+        }
+    } catch (PDOException $e) {
+        $errorMsg = $e->getMessage();
+        if (strpos($errorMsg, 'Unknown database') !== false) {
+            $msg = 'Banco de dados "' . DB_NAME . '" não existe. Crie o banco no aaPanel primeiro.';
+        } elseif (strpos($errorMsg, 'Access denied') !== false) {
+            $msg = 'Usuário ou senha do banco incorretos. Verifique DB_USER e DB_PASS no config.php';
+        } elseif (strpos($errorMsg, 'Connection refused') !== false) {
+            $msg = 'Não foi possível conectar ao MySQL. Verifique se o serviço está rodando.';
+        } else {
+            $msg = 'Erro ao conectar: ' . $errorMsg;
+        }
+        echo json_encode(['success' => false, 'message' => $msg]);
+        exit;
+    }
+}
+
 // Update settings
 $updates = [
     'USE_EXTERNAL_WEBHOOK' => isset($input['use_webhook']) && $input['use_webhook'] ? 'true' : 'false',

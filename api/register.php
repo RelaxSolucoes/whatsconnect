@@ -76,16 +76,21 @@ if (USE_EXTERNAL_WEBHOOK && !empty(WEBHOOK_URL)) {
     if ($webhookResult['success']) {
         // Save to database if enabled (after N8N processing)
         if (USE_DATABASE) {
-            $db = Database::getInstance();
-            $db->saveRegistration([
-                'full_name' => $input['fullName'],
-                'email' => $input['email'],
-                'whatsapp' => $input['whatsapp'],
-                'company_name' => $input['companyName'],
-                'chatwoot_account_id' => $webhookResult['data']['account_id'] ?? null,
-                'chatwoot_user_id' => $webhookResult['data']['user_id'] ?? null,
-                'evolution_instance' => $companyNameClean
-            ]);
+            try {
+                $db = Database::getInstance();
+                $saved = $db->saveRegistration([
+                    'full_name' => $input['fullName'],
+                    'email' => $input['email'],
+                    'whatsapp' => $input['whatsapp'],
+                    'company_name' => $input['companyName'],
+                    'chatwoot_account_id' => $webhookResult['data']['account_id'] ?? null,
+                    'chatwoot_user_id' => $webhookResult['data']['user_id'] ?? null,
+                    'evolution_instance' => $companyNameClean
+                ]);
+                error_log("Database save (webhook) result: " . ($saved ? "ID $saved" : "FAILED"));
+            } catch (Exception $dbError) {
+                error_log("Database save (webhook) error: " . $dbError->getMessage());
+            }
         }
         
         // Send WhatsApp welcome message if enabled (after N8N processing)
@@ -156,16 +161,21 @@ try {
     
     // Save to database if enabled
     if (USE_DATABASE) {
-        $db = Database::getInstance();
-        $db->saveRegistration([
-            'full_name' => $input['fullName'],
-            'email' => $input['email'],
-            'whatsapp' => $input['whatsapp'],
-            'company_name' => $input['companyName'],
-            'chatwoot_account_id' => $accountId,
-            'chatwoot_user_id' => $userId,
-            'evolution_instance' => $companyNameClean
-        ]);
+        try {
+            $db = Database::getInstance();
+            $saved = $db->saveRegistration([
+                'full_name' => $input['fullName'],
+                'email' => $input['email'],
+                'whatsapp' => $input['whatsapp'],
+                'company_name' => $input['companyName'],
+                'chatwoot_account_id' => $accountId,
+                'chatwoot_user_id' => $userId,
+                'evolution_instance' => $companyNameClean
+            ]);
+            error_log("Database save result: " . ($saved ? "ID $saved" : "FAILED"));
+        } catch (Exception $dbError) {
+            error_log("Database save error: " . $dbError->getMessage());
+        }
     }
     
     // Send WhatsApp welcome message if enabled
