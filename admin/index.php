@@ -237,6 +237,27 @@ $isAuthenticated = isset($_SESSION['admin']) && $_SESSION['admin'] === true;
                         
                         <hr style="margin: 30px 0; border-color: var(--gray-dark);">
                         
+                        <div class="settings-group">
+                            <h4><i class="fas fa-key"></i> Alterar Senha do Admin</h4>
+                            <form id="changePasswordForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Senha Atual</label>
+                                        <input type="password" id="currentPassword" placeholder="Digite sua senha atual" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nova Senha</label>
+                                        <input type="password" id="newPassword" placeholder="Digite a nova senha" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Alterar Senha
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <hr style="margin: 30px 0; border-color: var(--gray-dark);">
+                        
                         <div class="danger-zone">
                             <h4 style="color: #e74c3c;"><i class="fas fa-exclamation-triangle"></i> Zona de Perigo</h4>
                             <p style="color: var(--gray); margin-bottom: 15px;">

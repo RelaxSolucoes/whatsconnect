@@ -77,7 +77,7 @@ _Equipe WhatsConnect_');
 // Security Settings
 // ========================================
 define('ADMIN_EMAIL', 'admin@whatsconnect.com');
-define('ADMIN_PASSWORD_HASH', ''); // Set via admin panel or manually with password_hash()
+define('ADMIN_PASSWORD_HASH', '$2y$10$JetKGBI1ABG/fR/KZHuC6uv.UyUAxP6oT6efbhYzA9Fwa6DVQVOYK'); // Senha padrão: admin123
 
 // JWT Secret for session tokens (change this!)
 define('JWT_SECRET', 'your-super-secret-key-change-this-in-production');

@@ -378,6 +378,44 @@ if (testMessageForm) {
 }
 
 // ========================================
+// Change Password Form
+// ========================================
+const changePasswordForm = document.getElementById('changePasswordForm');
+if (changePasswordForm) {
+    changePasswordForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        
+        if (newPassword.length < 6) {
+            showToast('A nova senha deve ter pelo menos 6 caracteres', 'error');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/admin/api/change-password.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ currentPassword, newPassword })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                showToast('Senha alterada com sucesso!', 'success');
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+            } else {
+                showToast(result.message || 'Erro ao alterar senha', 'error');
+            }
+        } catch (error) {
+            showToast('Erro de conexão', 'error');
+        }
+    });
+}
+
+// ========================================
 // Personalization Form
 // ========================================
 const personalizationForm = document.getElementById('personalizationForm');

@@ -107,20 +107,18 @@ Antes de começar, aponte seu domínio/subdomínio para o servidor:
 
 ---
 
-## 🔐 IMPORTANTE: Alterar senha do admin
+## 🔐 Alterar senha do admin
 
 Por segurança, altere a senha padrão do admin:
 
-1. Abra o arquivo `config/config.php`
-2. Localize a linha: `define('ADMIN_PASSWORD_HASH', '');`
-3. Gere um novo hash em: https://bcrypt-generator.com/
-4. Cole o hash gerado entre as aspas simples
-5. Salve o arquivo
+1. Faça login no painel admin com a senha padrão (`admin123`)
+2. Vá em **Configurações**
+3. Na seção **Alterar Senha do Admin**, digite:
+   - Senha atual
+   - Nova senha
+4. Clique em **Alterar Senha**
 
-**Ou**, se você tem acesso ao terminal:
-```bash
-php -r "echo password_hash('SuaNovaSenha123', PASSWORD_DEFAULT);"
-```
+Pronto! Na próxima vez, use a nova senha para entrar.
 
 ---
 

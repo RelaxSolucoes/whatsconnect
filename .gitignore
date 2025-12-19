@@ -2,8 +2,8 @@
 logs/*.log
 logs/error.log
 
-# Config com credenciais (opcional - descomente se não quiser versionar)
-# config/config.php
+# Config backup com dados reais - NUNCA versionar!
+config/config.backup.php
 
 # IDE
 .idea/
